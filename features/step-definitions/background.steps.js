@@ -5,3 +5,8 @@ Given(/^the user is on (.*) page$/, async (pageUrl) => {
 	await browser.url(constants.URL_BROWSER + pageUrl);
 });
 
+Then(/^the user waits for a bit$/, async() => {
+	await browser.pause(6000);
+});
+
+
