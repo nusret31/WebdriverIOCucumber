@@ -1,17 +1,19 @@
-const DynamicLoading = require('../pageobjects/dynamicloading.page');
+const dynamicLoading = require('../pageobjects/dynamicloading.page');
+const { expect, $ } = require('@wdio/globals');
 const {Given, When, Then } = require('@wdio/cucumber-framework');
 
 
-Then(/^the user clicks on dynamic loading page number(.*)$/, async(pageNo) => {
+Then(/^the user clicks on dynamic loading page number (.*)$/, async(pageNo) => {
 	switch (pageNo) {
         case '1':
-            await expect(DynamicLoading.getFirstLoadPage).toBeClickable();
-            await (DynamicLoading.getFirstLoadPage).click();
+            await expect(dynamicLoading.FirstLoadPage).toBeClickable();
+            await (dynamicLoading.FirstLoadPage).click();
             await browser.pause(6000);
             break;
         case '2':
-            await expect(DynamicLoading.getSecondLoadPage).toBeClickable();
-            await (DynamicLoading.getSecondLoadPage).click();
+            await expect(dynamicLoading.SecondLoadPage).toBeClickable();
+            await (dynamicLoading.SecondLoadPage).click();
+            await browser.pause(6000);
             break;
         default:
             console.log(`it will fail.`);
@@ -20,16 +22,23 @@ Then(/^the user clicks on dynamic loading page number(.*)$/, async(pageNo) => {
 
 
 Then(/^the user does actions for the first dynamic page$/, async() => {
-	await (DynamicLoading.getStartButton()).click();
-    await (DynamicLoading.getLoadingSlider()).waitUntil(async function () {
-        return (((await DynamicLoading.getFinishText()).isDisplayed))
+    await browser.pause(2000);
+    await expect(dynamicLoading.StartButton).toBeClickable();
+	await (dynamicLoading.StartButton).click();
+    await browser.pause(6000);
+    await (dynamicLoading.LoadingSlider).waitUntil(async function () {
+        return (((await dynamicLoading.FinishText).isDisplayed))
     }, {
         timeout: 8000,
-        timeoutMsg: 'the hello world message is displayed'
+        timeoutMsg: 'the hello world message is not displayed'
     })
 });
 
-Then(/^the user does actions for the second dynamic page$/, () => {
-	return true;
+Then(/^the user does actions for the second dynamic page$/, async() => {
+    await browser.pause(2000);
+    await expect(dynamicLoading.StartButton).toBeClickable();
+	await (dynamicLoading.StartButton).click();
+    await browser.pause(6000);
+    await (dynamicLoading.FinishText).waitForEnabled({ timeout: 7000 });
 });
 

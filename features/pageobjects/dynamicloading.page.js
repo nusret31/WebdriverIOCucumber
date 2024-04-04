@@ -1,21 +1,21 @@
 const { $ } = require('@wdio/globals')
 
 class DynamicLoading {
-    getFirstLoadPage(){
+    get FirstLoadPage(){
         return $('a[href*="/dynamic_loading/1"]');
     }    
 
-    getSecondLoadPage(){
+    get SecondLoadPage(){
         return $('a[href*="/dynamic_loading/2"]');
     }
 
-    getStartButton(){
-        return $("#start > button");
+    get StartButton(){
+        return $("div[id='start'] button");
     }
-    getLoadingSlider(){
+    get LoadingSlider(){
         return $("//div[@id='loading']/img[1]");
     }
-    getFinishText(){
+    get FinishText(){
         return $("//div[@id='finish']/h4[1]");
     }
 }
